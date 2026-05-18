@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="description" content="Artist Abi — mural and wall art portfolio" />
+  <meta name="theme-color" content="#141210" />
+  <title>Artist Abi | Murals</title>
+  <link rel="icon" href="logo.jpg" type="image/jpeg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="hero">
+    <img class="logo" src="logo.jpg" alt="Artist Abi logo" width="120" height="120" />
+    <h1 class="name" id="artist-name">Artist Abi</h1>
+    <p class="tagline" id="tagline">Mural & wall artist</p>
+    <p class="bio" id="bio"></p>
+    <nav class="links" id="social-links" aria-label="Contact links"></nav>
+  </header>
+
+  <nav class="tabs" aria-label="Gallery sections">
+    <button type="button" class="tab active" data-panel="photos">Photos</button>
+    <button type="button" class="tab" data-panel="videos">Videos</button>
+  </nav>
+
+  <main>
+    <section id="panel-photos" class="panel active" aria-label="Photo gallery">
+      <div class="gallery" id="gallery" role="list"></div>
+      <p class="empty hidden" id="photos-empty">No photos yet. Add images to the <code>photos</code> folder.</p>
+    </section>
+
+    <section id="panel-videos" class="panel" aria-label="Videos from Instagram" hidden>
+      <p class="videos-intro">Videos play on Instagram — tap to watch.</p>
+      <div class="video-list" id="video-list"></div>
+      <p class="empty hidden" id="videos-empty">Add Instagram reel links in <code>videos.json</code>.</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <a id="footer-insta" href="https://www.instagram.com/artistabi/" target="_blank" rel="noopener noreferrer">Follow @artistabi</a>
+  </footer>
+
+  <div id="lightbox" class="lightbox hidden" role="dialog" aria-modal="true" aria-label="Photo viewer">
+    <button type="button" class="lightbox-close" aria-label="Close">&times;</button>
+    <button type="button" class="lightbox-prev" aria-label="Previous photo">&#8249;</button>
+    <img id="lightbox-img" src="" alt="" />
+    <button type="button" class="lightbox-next" aria-label="Next photo">&#8250;</button>
+  </div>
+
+  <script async src="//www.instagram.com/embed.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
