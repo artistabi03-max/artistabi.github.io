@@ -3,18 +3,35 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <!-- When you change CSS, JS, logo, or replace photos with the same filename: increment content (e.g. 1 → 2). One place only. -->
+  <meta name="site-asset-version" content="2" />
+  <meta http-equiv="Cache-Control" content="max-age=0, must-revalidate" />
   <meta name="description" content="Artist Abi — mural and wall art portfolio" />
   <meta name="theme-color" content="#141210" />
   <title>Artist Abi | Murals</title>
-  <link rel="icon" href="logo.jpg" type="image/jpeg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css" />
+  <script>
+    (function () {
+      var v = (document.querySelector('meta[name="site-asset-version"]') || {}).getAttribute("content") || "1";
+      window.__SITE_ASSET_V__ = v;
+      var qs = "?v=" + encodeURIComponent(v);
+      var css = document.createElement("link");
+      css.rel = "stylesheet";
+      css.href = "css/style.css" + qs;
+      document.head.appendChild(css);
+      var icon = document.createElement("link");
+      icon.rel = "icon";
+      icon.type = "image/jpeg";
+      icon.href = "logo.jpg" + qs;
+      document.head.appendChild(icon);
+    })();
+  </script>
 </head>
 <body>
   <header class="hero">
-    <img class="logo" src="logo.jpg" alt="Artist Abi logo" width="120" height="120" />
+    <img class="logo" src="" alt="Artist Abi logo" width="120" height="120" id="site-logo" />
     <h1 class="name" id="artist-name">Artist Abi</h1>
     <p class="tagline" id="tagline">Mural & wall artist</p>
     <p class="bio" id="bio"></p>
@@ -51,6 +68,13 @@
   </div>
 
   <script async src="//www.instagram.com/embed.js"></script>
-  <script src="js/app.js"></script>
+  <script>
+    (function () {
+      var v = window.__SITE_ASSET_V__ || "1";
+      var s = document.createElement("script");
+      s.src = "js/app.js?v=" + encodeURIComponent(v);
+      document.body.appendChild(s);
+    })();
+  </script>
 </body>
 </html>

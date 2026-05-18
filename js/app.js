@@ -16,6 +16,23 @@
       .join("/");
   }
 
+  /** Bust CDN/browser cache for gallery images when you bump site-asset-version in index.html */
+  function assetVersionQuery() {
+    var v = typeof window.__SITE_ASSET_V__ !== "undefined" ? window.__SITE_ASSET_V__ : "";
+    return v ? "?v=" + encodeURIComponent(v) : "";
+  }
+
+  function mediaUrl(path) {
+    return encodePath(path) + assetVersionQuery();
+  }
+
+  function loadJson(url) {
+    return fetch(url, { cache: "no-store" }).then(function (r) {
+      if (!r.ok) throw new Error(r.status);
+      return r.json();
+    });
+  }
+
   function setupTabs() {
     document.querySelectorAll(".tab").forEach((tab) => {
       tab.addEventListener("click", () => {
@@ -47,7 +64,7 @@
       btn.setAttribute("role", "listitem");
       btn.setAttribute("aria-label", "View photo " + (index + 1));
       const img = document.createElement("img");
-      img.src = encodePath(path);
+      img.src = mediaUrl(path);
       img.alt = "Mural work " + (index + 1);
       img.loading = index < 6 ? "eager" : "lazy";
       btn.appendChild(img);
@@ -58,7 +75,7 @@
 
   function openLightbox(index) {
     lightboxIndex = index;
-    lightboxImg.src = encodePath(photoPaths[index]);
+    lightboxImg.src = mediaUrl(photoPaths[index]);
     lightboxImg.alt = "Mural work " + (index + 1);
     lightbox.classList.remove("hidden");
     document.body.style.overflow = "hidden";
@@ -71,7 +88,7 @@
 
   function stepLightbox(delta) {
     lightboxIndex = (lightboxIndex + delta + photoPaths.length) % photoPaths.length;
-    lightboxImg.src = encodePath(photoPaths[lightboxIndex]);
+    lightboxImg.src = mediaUrl(photoPaths[lightboxIndex]);
   }
 
   function setupLightbox() {
@@ -192,10 +209,15 @@
     setupLightbox();
 
     try {
+      var logo = document.getElementById("site-logo");
+      if (logo && typeof window.__SITE_ASSET_V__ !== "undefined") {
+        logo.src = "logo.jpg?v=" + encodeURIComponent(window.__SITE_ASSET_V__);
+      }
+
       const [config, gallery, videos] = await Promise.all([
-        fetch("config.json").then((r) => r.json()),
-        fetch("gallery.json").then((r) => r.json()),
-        fetch("videos.json").then((r) => r.json()),
+        loadJson("config.json"),
+        loadJson("gallery.json"),
+        loadJson("videos.json"),
       ]);
       applyConfig(config);
       photoPaths = gallery;
